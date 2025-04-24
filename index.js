@@ -6,16 +6,14 @@ app.use(express.json());
 
 // MONGODB CONNECTION (Local)
 mongoose
-  .connect("mongodb://127.0.0.1:27017/jamila-crud", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect("mongodb://127.0.0.1:27017/jamila-crud")
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(" Connection error:", err));
 
+
 // START SERVER
 app.listen(3000, () => {
-  console.log("🚀 Server is running on http://localhost:3000");
+  console.log("Server is running on http://localhost:3000");
 });
 
 const User = require("./User");
@@ -32,7 +30,6 @@ app.post("/users", async (req, res) => {
   }
 });
 
-
 // READ all
 app.get("/users", async (req, res) => {
   try {
@@ -42,7 +39,6 @@ app.get("/users", async (req, res) => {
     res.status(500).send({ error: "Failed to fetch users" });
   }
 });
-
 
 // READ one
 app.get("/users/:id", async (req, res) => {
