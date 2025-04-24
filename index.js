@@ -10,8 +10,8 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch((err) => console.log("❌ Connection error:", err));
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.log(" Connection error:", err));
 
 // START SERVER
 app.listen(3000, () => {
@@ -22,16 +22,27 @@ const User = require("./User");
 
 // CREATE
 app.post("/users", async (req, res) => {
-  const user = new User(req.body);
-  await user.save();
-  res.send(user);
+  try {
+    const user = new User(req.body);
+    await user.save();
+    res.status(201).send(user); // 201 = Created
+  } catch (error) {
+    console.error("Error creating user:", error.message);
+    res.status(400).send({ error: error.message });
+  }
 });
+
 
 // READ all
 app.get("/users", async (req, res) => {
-  const users = await User.find();
-  res.send(users);
+  try {
+    const users = await User.find();
+    res.send(users);
+  } catch (error) {
+    res.status(500).send({ error: "Failed to fetch users" });
+  }
 });
+
 
 // READ one
 app.get("/users/:id", async (req, res) => {
