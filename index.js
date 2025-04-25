@@ -6,7 +6,7 @@ app.use(express.json());
 
 // MONGODB CONNECTION (Local)
 mongoose
-  .connect("mongodb://127.0.0.1:27017/jamila-crud")
+  .connect("mongodb://127.0.0.1:27017/user-crud")
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(" Connection error:", err));
 
@@ -23,7 +23,7 @@ app.post("/users", async (req, res) => {
   try {
     const user = new User(req.body);
     await user.save();
-    res.status(201).send(user); // 201 = Created
+    res.status(201).send(user); 
   } catch (error) {
     console.error("Error creating user:", error.message);
     res.status(400).send({ error: error.message });
